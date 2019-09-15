@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: awstomcat
+spec:
+  containers:
+  -  name: awstomcat
+     image: mvikram93/awstomcat:latest
+     ports:
+     - containerPort: 8081
+       Port: 8081
+
+
+
+
+
+
+
+
+

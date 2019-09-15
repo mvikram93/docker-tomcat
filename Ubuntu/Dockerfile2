@@ -7,7 +7,7 @@ RUN  apt-get -y upgrade
 RUN	 apt -y install apt-transport-https ca-certificates curl software-properties-common 
 RUN	 add-apt-repository ppa:webupd8team/java 
 RUN	 apt update 
-RUN	 apt-get install -y openjdk-8-jdk
+RUN	 apt-get install -y openjdk-8-jdk vim
 
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 RUN export JAVA_HOME
@@ -19,8 +19,16 @@ RUN mkdir /opt/tomcat
 RUN tar xf /tmp/apache-tomcat-9*.tar.gz -C /opt/tomcat
 RUN mkdir /opt/tomcat/latest
 RUN ln -s /opt/tomcat/apache-tomcat-9.0.24 /opt/tomcat/latest
-#RUN chown -RH tomcat: /opt/tomcat/latest
 RUN chmod +x /opt/tomcat/latest/apache-tomcat-9.0.24/bin/*.sh
 COPY sample.war /opt/tomcat/latest/apache-tomcat-9.0.24/webapps/
+COPY tomcat /etc/init.d
+RUN cd ~
+RUN cd /etc/init.d
+RUN chmod 755 /etc/init.d/tomcat
+RUN sed -i -e 's/\r//g' /etc/init.d/tomcat
+
+#WORKDIR /opt/tomcat/latest/apache-tomcat-9.0.24/bin
+RUN cd /etc/init.d/
 EXPOSE 8080
-CMD ["catalina.sh", "run"]
+CMD service tomcat start
+#CMD ["./catalina.sh","start"]

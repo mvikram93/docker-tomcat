@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: awstomcat-rc
+spec:
+  replicas: 2
+  selector:
+    app: sample
+  template:
+    metadata:
+      labels:
+        app: sample
+    spec:
+      containers:
+      -  name: awstomcat-pod
+         image: mvikram93/awstomcat:latest
+         ports:
+         - containerPort: 8080
+          
+          
+
+
+
+
+
+
+
+
+
+
